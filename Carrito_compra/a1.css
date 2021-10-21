@@ -1,0 +1,12 @@
+label{
+    float: none;
+    display: inline-block;
+    font-weight: bold;
+    margin: 0.5em auto;
+}
+
+input{
+    float: none;
+    display: inline-block;
+    margin: 0.5em auto;
+}

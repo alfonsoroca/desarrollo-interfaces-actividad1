@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carrito de la compra</title>
+        <link rel="stylesheet" href="./a1.css">
+        <script type="text/javascript" src="./a1.js"></script>
+
+    </head>
+
+    <body>
+        <div id="contenedor">
+            <form action="" id="carritoCompra">
+                <fieldset>
+                    <!-- Campo nombre del artículo -->
+                    <label for="nombreArticulo">Nombre artículo:</label>
+                    <input type="text" id="nombreArticulo" placeholder="Nombre articulo" autofocus/>
+                    <small id="errorArticulo">Falta artículo</small>
+                    <br>
+
+                    <!-- Campo precio del artículo -->
+                    <label for="precioArticulo">Precio artículo:</label>
+                    <input type="text" id="precioArticulo" placeholder="00.00" />
+                    <small id="errorPrecio">Falta precio</small>
+                    <br>
+
+                    <!-- Campo unidades del artículo -->
+                    <label for="unidadesArticulo">Unidades: </label>
+                    <input type="number" value="1" min="1" step="1" id="unidadesArticulo"/>
+                    <br>
+
+                    <!-- Botón añadir al carrito -->
+                    <input type="button" id="anadirCarrito" value="Añadir al carrito">
+                    <br><br>
+                    
+                    <!-- Campo con los artículos del carrito -->
+                    <label for="articulosCarrito">Artículos en el carrito:</label>
+                    <input type="text" size="75" id="articulosCarrito" />
+                    <br>
+
+                    <!-- Campo con el precio total de los artículos del carrito -->
+                    <label for="precioCarrito">Precio total del carrito:</label>
+                    <input type="text" id="precioCarrito" placeholder="0.00"/>
+                    <br><br>
+
+                    <!-- Desplegable con la forma de pago -->
+                    <label for="formaPago">Forma de pago:</label>
+                    <select name="formaPago" id="formaPago">
+                        <option value="seleccione" selected>--Seleccione--</option>
+                        <option value="tarjeta">Tarjeta</option>
+                        <option value="efectivo">Efectivo</option>
+                    </select>
+                    <br>
+                        <!-- Campos desplegados cuando se selecciona la opción tarjeta -->
+                        <div id="capaTarjeta">
+                            <label for="titularTarjeta">Titular tarjeta:</label>
+                            <input type="text" id="titularTarjeta" required/>
+                            <br>
+                            <label for="numTarjeta">Número de tarjeta:</label>
+                            <input type="text" id="numTarjeta" required/>
+                            <br>
+                            <label for="cvv">CVV:</label>
+                            <input type="text" size="3" id="cvv" required/>
+                            <br><br><br>
+                        </div>
+
+                        <!-- Campos desplegados cuando se selecciona la opción efectivo -->
+                        <div id="capaEfectivo">
+                            <label for="importeEfectivo">Importe Efectivo:</label>
+                            <input type="text" id="importeEfectivo" />
+                            <br><br><br>
+                        </div>                
+
+                    <!-- Campo aceptación condiciones compra -->
+                    <input type="checkbox" id="condicionesCompra" value = "Y" required />
+                    <label for="condicionesCompra">Acepto las condiciones de compra</label>
+                    <br>
+
+                    <!-- Botones Imprimir y Restablecer -->
+                    <input type="button" value="Imprimir" id="imprimir" />
+                    <input type="reset" value="Restablecer" id="restablecer" />
+                </fieldset>
+            </form>
+        </div>
+    </body>
+
+</html>
