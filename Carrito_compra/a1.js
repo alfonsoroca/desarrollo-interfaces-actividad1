@@ -1,30 +1,31 @@
 // Declaración de variables
-var DOMnombreArticulo;
-var DOMerrorArticulo;
-var DOMprecioArticulo;
-var DOMerrorPrecio;
-var DOMunidadesArticulo;
-var DOMbotonAnadirCarrito;
+    // Las variables de nombre dom_* recogen los nodos del documento html
+    // Las variables sin dom_* se utilizan para dotar de funcionalidad al html
+var dom_nombreArticulo;
+var dom_errorArticulo;
+var dom_precioArticulo;
+var dom_errorPrecio;
+var dom_unidadesArticulo;
+var dom_botonAnadirCarrito;
 
-var DOMarticulosCarrito;
-arrayArticulosCarrito = new Array();
 var listaArticulosCarrito = "";
-var DOMprecioCarrito;
+var dom_articulosCarrito;
+var dom_precioCarrito;
 var precioCarrito = 0;
 
-var DOMformaPago;
-var DOMcapaTarjeta;
-var DOMcapaEfectivo;
-var DOMtitularTarjeta;
-var DOMnumTarjeta;
-var DOMcvv;
-var DOMimporteEfectivo;
+var dom_formaPago;
+var dom_capaTarjeta;
+var dom_capaEfectivo;
+var dom_titularTarjeta;
+var dom_numTarjeta;
+var dom_cvv;
+var dom_importeEfectivo;
 
-var DOMcondicionesCompra;
+var dom_condicionesCompra;
 
-var DOMbotonImprimir;
+var dom_botonImprimir;
 var conmutadorImprimir = 0;
-var DOMbotonRestablecer;
+var dom_botonRestablecer;
 
 
 
@@ -41,39 +42,39 @@ window.addEventListener("load", ()=>{
 
 // Función para inicializar las variables y estados de los nodos
 function init() {
-    DOMnombreArticulo = document.getElementById("nombreArticulo");
-    DOMerrorArticulo = document.getElementById("errorArticulo");
-    DOMprecioArticulo = document.getElementById("precioArticulo");
-    DOMerrorPrecio = document.getElementById("errorPrecio");
-    DOMunidadesArticulo = document.getElementById("unidadesArticulo");
-    DOMbotonAnadirCarrito = document.getElementById("anadirCarrito");
+    dom_nombreArticulo = document.getElementById("nombreArticulo");
+    dom_errorArticulo = document.getElementById("errorArticulo");
+    dom_precioArticulo = document.getElementById("precioArticulo");
+    dom_errorPrecio = document.getElementById("errorPrecio");
+    dom_unidadesArticulo = document.getElementById("unidadesArticulo");
+    dom_botonAnadirCarrito = document.getElementById("anadirCarrito");
     
-    DOMarticulosCarrito = document.getElementById("articulosCarrito");
-    DOMprecioCarrito = document.getElementById("precioCarrito");
+    dom_articulosCarrito = document.getElementById("articulosCarrito");
+    dom_precioCarrito = document.getElementById("precioCarrito");
     
-    DOMformaPago = document.getElementById("formaPago");    
-    DOMcapaTarjeta = document.getElementById("capaTarjeta");
-    DOMcapaEfectivo = document.getElementById("capaEfectivo");
-    DOMtitularTarjeta = document.getElementById("titularTarjeta");
-    DOMnumTarjeta = document.getElementById("numTarjeta");
-    DOMcvv = document.getElementById("cvv");
-    DOMimporteEfectivo = document.getElementById("importeEfectivo");
+    dom_formaPago = document.getElementById("formaPago");    
+    dom_capaTarjeta = document.getElementById("capaTarjeta");
+    dom_capaEfectivo = document.getElementById("capaEfectivo");
+    dom_titularTarjeta = document.getElementById("titularTarjeta");
+    dom_numTarjeta = document.getElementById("numTarjeta");
+    dom_cvv = document.getElementById("cvv");
+    dom_importeEfectivo = document.getElementById("importeEfectivo");
 
-    DOMcondicionesCompra = document.getElementById("condicionesCompra");
+    dom_condicionesCompra = document.getElementById("condicionesCompra");
 
-    DOMbotonImprimir = document.getElementById("imprimir");
-    DOMbotonRestablecer = document.getElementById("restablecer");
+    dom_botonImprimir = document.getElementById("imprimir");
+    dom_botonRestablecer = document.getElementById("restablecer");
 
     // Oculta los errores al validar los campos nombreArtículo y precioArtículo
-    DOMerrorArticulo.style.display = "none";
-    DOMerrorPrecio.style.display = "none";
+    dom_errorArticulo.style.display = "none";
+    dom_errorPrecio.style.display = "none";
 
     // Oculta las capas relacionadas con la forma de pago tarjeta y efectivo
-    DOMcapaTarjeta.style.display="none";
-    DOMcapaEfectivo.style.display="none";
+    dom_capaTarjeta.style.display="none";
+    dom_capaEfectivo.style.display="none";
 
     // Oculta el botón Imprimir
-    DOMbotonImprimir.style.visibility = "hidden";
+    dom_botonImprimir.style.visibility = "hidden";
 
 }
 
@@ -81,138 +82,206 @@ function init() {
 function manejadorEventos() {
     
     // Funcionalidad del botón añadir al carrito
-    DOMbotonAnadirCarrito.addEventListener("click", f_anadirCarrito);
+    dom_botonAnadirCarrito.addEventListener("click", f_anadirCarrito);
     
     // Selector de la forma de pago
-    DOMformaPago.addEventListener("change", f_selectorFormaPago);
-
-    // Funcionalidad del botón Restablecer
-    DOMbotonRestablecer.addEventListener("click", f_restablecer);
+    dom_formaPago.addEventListener("change", f_selectorFormaPago);
 
     // Funcionalidad de la casilla condiciones de compra
-    DOMcondicionesCompra.addEventListener("click", f_aceptacionCondiciones)
+    dom_condicionesCompra.addEventListener("click", f_aceptacionCondiciones)
 
     // Funcionalidad del botón Imprimir
-    DOMbotonImprimir.addEventListener("click", f_imprimir);
+    dom_botonImprimir.addEventListener("click", f_imprimir);
 
-}
-
-// Función para la lógica de la forma de pago
-function f_selectorFormaPago() {
-    if (DOMformaPago.value == "tarjeta") {
-        DOMcapaTarjeta.style.display = "block";
-        DOMcapaEfectivo.style.display = "none";
-        
-    } else if (DOMformaPago.value == "efectivo") {
-        DOMcapaTarjeta.style.display = "none";
-        DOMcapaEfectivo.style.display = "block";
-        DOMimporteEfectivo.value = DOMprecioCarrito.value;
-        
-    } else {
-        DOMcapaTarjeta.style.display = "none";
-        DOMcapaEfectivo.style.display = "none";    
-    }
-}
-
-// Función que resetea la página a las indicaciones del requerimiento
-function f_restablecer(){
-  
-    DOMnombreArticulo.focus();
-    DOMcapaTarjeta.style.display = "none";
-    DOMcapaEfectivo.style.display = "none";
-    precioCarrito = 0;
-    conmutadorImprimir = 0;
+    // Funcionalidad del botón Restablecer
+    dom_botonRestablecer.addEventListener("click", f_restablecer);
 
 }
 
 // Función que valida los campos nombre y precio del artículo
 function f_anadirCarrito(){
 
-    DOMerrorArticulo.style.display = "none";
-    DOMerrorPrecio.style.display = "none";
+    dom_errorArticulo.style.display = "none";
+    dom_errorPrecio.style.display = "none";
+    dom_nombreArticulo.className = "";
+    dom_precioArticulo.className = "";
     var error = 0;
     
     // Condicionales que validan los campos articulo y precio
-
-    if (DOMprecioArticulo.value == "") {
-        DOMerrorPrecio.style.display = "inline";
-        DOMprecioArticulo.focus();
+    if (dom_precioArticulo.value == "") {
+        dom_errorPrecio.style.display = "inline";
+        dom_precioArticulo.className = "error";
+        dom_precioArticulo.focus();
         error++;   
         
     } else {
         var validadorPrecio = /^\d{1,9}\.?\d{0,2}$/;
-        if (validadorPrecio.test(DOMprecioArticulo.value) == false) {
-            DOMerrorPrecio.style.display = "inline";
-            DOMerrorPrecio.textContent = "Formato erróneo (00.00)";
-            DOMprecioArticulo.focus();
+        if (validadorPrecio.test(dom_precioArticulo.value) == false) {
+            dom_errorPrecio.style.display = "inline";
+            dom_errorPrecio.textContent = "Formato erróneo (00.00)";
+            dom_precioArticulo.className = "error";
+            dom_precioArticulo.focus();
             error++;        
         }
     }
 
-    if (DOMnombreArticulo.value == "") {
-        DOMerrorArticulo.style.display = "inline";
-        DOMnombreArticulo.focus();
+    if (dom_nombreArticulo.value == "") {
+        dom_errorArticulo.style.display = "inline";
+        dom_nombreArticulo.className = "error"; 
+        dom_nombreArticulo.focus();
         error++;
     }
 
-    if (error == 0) f_incluir();
-    
+    // Llamamos a la función que añade los productos al carrito y calcula su precio
+    if (error == 0) f_incluir();    
 }
- 
+
+// Función que añade los productos al carrito y calcula su precio
 function f_incluir () {
-/*
-    arrayArticulosCarrito.push(DOMnombreArticulo.value);
-    
-    for (i = 0; i < arrayArticulosCarrito.length; i++){
+
+    // Condicional para añadir los artículos al carrito según requerimiento
+    if (listaArticulosCarrito == "") {
+
+        listaArticulosCarrito = dom_nombreArticulo.value;
+
+        dom_articulosCarrito.value = listaArticulosCarrito;
         
-        if(i = 0) {
-            listaArticulosCarrito += (arrayArticulosCarrito[i]);    
-        } else {
-            listaArticulosCarrito += (arrayArticulosCarrito[i] + ", ");
-        }           
-    }*/
+    } else {
+        
+        listaArticulosCarrito = listaArticulosCarrito + ", " + dom_nombreArticulo.value;
 
-    //DOMarticulosCarrito.textContent = listaArticulosCarrito;
+        dom_articulosCarrito.value = listaArticulosCarrito;        
+    }      
+            
+    dom_nombreArticulo.value = "";
+    dom_nombreArticulo.focus();
+
+    precioCarrito = precioCarrito + (dom_unidadesArticulo.value * dom_precioArticulo.value);
     
-    DOMnombreArticulo.value = "";
-    DOMnombreArticulo.focus();
-
-    precioCarrito = precioCarrito + (parseFloat(DOMunidadesArticulo.value) * parseFloat(DOMprecioArticulo.value));
-
     precioCarrito.toFixed(2);
+
+    dom_precioArticulo.value = "";
+    dom_unidadesArticulo.value = 1;
     
-    DOMprecioArticulo.value = "";
-    DOMunidadesArticulo.value = 1;
-    
-    DOMprecioCarrito.value = precioCarrito + "€";
+    dom_precioCarrito.value = precioCarrito + "€";
 }
 
+// Función para la lógica de la forma de pago
+function f_selectorFormaPago() {
+    if (dom_formaPago.value == "tarjeta") {
+        dom_capaTarjeta.style.display = "block";
+        dom_capaEfectivo.style.display = "none";
+        
+    } else if (dom_formaPago.value == "efectivo") {
+        dom_capaTarjeta.style.display = "none";
+        dom_capaEfectivo.style.display = "block";
+        dom_importeEfectivo.value = dom_precioCarrito.value;
+        
+    } else {
+        dom_capaTarjeta.style.display = "none";
+        dom_capaEfectivo.style.display = "none";    
+    }
+}
+
+// Función que valida la aparición del botón Imprimir
 function f_aceptacionCondiciones() {
    
     conmutadorImprimir++;
-
+    
     if (conmutadorImprimir % 2 != 0) {
     
-        DOMbotonImprimir.style.visibility = "visible";
+        dom_botonImprimir.style.visibility = "visible";
         
     } else {
 
-        DOMbotonImprimir.style.visibility = "hidden";
+        dom_botonImprimir.style.visibility = "hidden";
     }    
 }
 
+// Función que establece el comprotamiento del botón imprimir
 function f_imprimir(){
 
-    if(DOMformaPago.value != "seleccione"){
-        alert(
-            "El carrito contiene: " + 
-            "\nPrecio total del carrito: " + DOMprecioCarrito.value + 
-            "\nForma de pago: " + DOMformaPago.value
-    );
+    dom_cvv.className = "";
+    dom_formaPago.className = "";
+    dom_numTarjeta.className = "";
+    dom_titularTarjeta.className = "";
+    
+    if(dom_formaPago.value != "seleccione"){
+
+        if(dom_formaPago.value == "tarjeta"){
+
+            var validadorNumeroTarjeta = /^\d{16}$/;
+            var validadorCvv = /^\d{3}$/;
+
+            if (validadorCvv.test(dom_cvv.value) == false || validadorNumeroTarjeta.test(dom_numTarjeta.value) == false || dom_titularTarjeta.value == "") {              
+                
+                if(validadorCvv.test(dom_cvv.value) == false){
+                    dom_cvv.className = "error";
+                    dom_cvv.focus();
+                }
+
+                if(validadorNumeroTarjeta.test(dom_numTarjeta.value) == false){
+                    dom_numTarjeta.className = "error";
+                    dom_numTarjeta.focus();
+                }
+    
+                if(dom_titularTarjeta.value == ""){
+                    dom_titularTarjeta.className = "error";
+                    dom_titularTarjeta.focus();
+                }
+
+                alert(
+                    "Revisa los datos de la tarjeta"
+                );
+                
+            } else {
+
+                alert(
+                    "El carrito contiene: " + listaArticulosCarrito +
+                    "\nPrecio total del carrito: " + dom_precioCarrito.value + 
+                    "\nForma de pago: " + dom_formaPago.value
+                );
+                
+                f_restablecer();
+            }
+
+
+        } else {
+
+            alert(
+                "El carrito contiene: " + listaArticulosCarrito +
+                "\nPrecio total del carrito: " + dom_precioCarrito.value + 
+                "\nForma de pago: " + dom_formaPago.value
+            );
+            
+            f_restablecer();
+
+        }
+        
     } else {
         alert(
             "Seleccione forma de pago"
         );
+        dom_formaPago.className = "error";
     }
+}
 
+// Función que resetea la página a las indicaciones del requerimiento
+function f_restablecer(){
+  
+    dom_nombreArticulo.focus();
+    dom_capaTarjeta.style.display = "none";
+    dom_capaEfectivo.style.display = "none";
+    dom_precioCarrito.value = 0;
+    dom_articulosCarrito.value = "";
+    listaArticulosCarrito = "";
+    precioCarrito = 0;
+    dom_formaPago.value = "seleccione";
+    dom_titularTarjeta.value = "";
+    dom_numTarjeta.value = "";
+    dom_cvv.value = "";
+    dom_importeEfectivo.value = 0;
+    dom_condicionesCompra.checked = false;
+    conmutadorImprimir = 0;
+    dom_botonImprimir.style.visibility = "hidden";
 }

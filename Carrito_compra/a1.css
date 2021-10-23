@@ -10,3 +10,8 @@ input{
     display: inline-block;
     margin: 0.5em auto;
 }
+
+.error{
+    background-color: #F8E0E0;
+    border: red solid 1px;
+}

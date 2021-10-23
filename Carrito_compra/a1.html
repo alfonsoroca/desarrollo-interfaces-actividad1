@@ -29,7 +29,7 @@
 
                     <!-- Campo unidades del artículo -->
                     <label for="unidadesArticulo">Unidades: </label>
-                    <input type="number" value="1" min="1" step="1" id="unidadesArticulo"/>
+                    <input type="number" size = "6" value = "1" min="1" step="1" id="unidadesArticulo"/>
                     <br>
 
                     <!-- Botón añadir al carrito -->
@@ -57,13 +57,13 @@
                         <!-- Campos desplegados cuando se selecciona la opción tarjeta -->
                         <div id="capaTarjeta">
                             <label for="titularTarjeta">Titular tarjeta:</label>
-                            <input type="text" id="titularTarjeta" required/>
+                            <input type="text" id="titularTarjeta" />
                             <br>
                             <label for="numTarjeta">Número de tarjeta:</label>
-                            <input type="text" id="numTarjeta" required/>
+                            <input type="text" size = "16" id="numTarjeta" placeholder = "0123456789123456"/>
                             <br>
                             <label for="cvv">CVV:</label>
-                            <input type="text" size="3" id="cvv" required/>
+                            <input type="text" size="3" id="cvv" placeholder = "123"/>
                             <br><br><br>
                         </div>
 
@@ -75,7 +75,7 @@
                         </div>                
 
                     <!-- Campo aceptación condiciones compra -->
-                    <input type="checkbox" id="condicionesCompra" value = "Y" required />
+                    <input type="checkbox" id="condicionesCompra" value = "Y" />
                     <label for="condicionesCompra">Acepto las condiciones de compra</label>
                     <br>
 
