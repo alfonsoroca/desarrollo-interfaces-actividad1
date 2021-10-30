@@ -6,6 +6,7 @@ var dom_errorArticulo;
 var dom_precioArticulo;
 var dom_errorPrecio;
 var dom_unidadesArticulo;
+var dom_errorUnidades;
 var dom_botonAnadirCarrito;
 
 var listaArticulosCarrito = "";
@@ -47,6 +48,8 @@ function init() {
     dom_precioArticulo = document.getElementById("precioArticulo");
     dom_errorPrecio = document.getElementById("errorPrecio");
     dom_unidadesArticulo = document.getElementById("unidadesArticulo");
+    dom_errorUnidades = document.getElementById("errorUnidades");
+
     dom_botonAnadirCarrito = document.getElementById("anadirCarrito");
     
     dom_articulosCarrito = document.getElementById("articulosCarrito");
@@ -65,9 +68,10 @@ function init() {
     dom_botonImprimir = document.getElementById("imprimir");
     dom_botonRestablecer = document.getElementById("restablecer");
 
-    // Oculta los errores al validar los campos nombreArtículo y precioArtículo
+    // Oculta los errores al validar los campos nombreArtículo, precioArtículo y unidades
     dom_errorArticulo.style.display = "none";
     dom_errorPrecio.style.display = "none";
+    dom_errorUnidades.style.display = "none";
 
     // Oculta las capas relacionadas con la forma de pago tarjeta y efectivo
     dom_capaTarjeta.style.display="none";
@@ -98,16 +102,25 @@ function manejadorEventos() {
 
 }
 
-// Función que valida los campos nombre y precio del artículo
+// Función que valida los campos nombre, precio y unidades del artículo
 function f_anadirCarrito(){
 
     dom_errorArticulo.style.display = "none";
     dom_errorPrecio.style.display = "none";
+    dom_errorUnidades.style.display = "none";
     dom_nombreArticulo.className = "";
     dom_precioArticulo.className = "";
+    dom_unidadesArticulo.className = "";    
     var error = 0;
     
-    // Condicionales que validan los campos articulo y precio
+    // Condicionales que validan los campos unidades de artículo precio y articulo
+    if (dom_unidadesArticulo.value < 1) {
+        dom_errorUnidades.style.display = "inline";
+        dom_unidadesArticulo.className = "error";
+        dom_unidadesArticulo.focus();
+        error++;
+    }
+
     if (dom_precioArticulo.value == "") {
         dom_errorPrecio.style.display = "inline";
         dom_precioArticulo.className = "error";
@@ -125,6 +138,8 @@ function f_anadirCarrito(){
         }
     }
 
+        // La única validación del campo es que no esté vacío ya que hay artículos que contienen números y
+        // otros caracteres en su nombre.
     if (dom_nombreArticulo.value == "") {
         dom_errorArticulo.style.display = "inline";
         dom_nombreArticulo.className = "error"; 
@@ -154,12 +169,10 @@ function f_incluir () {
     }      
             
     dom_nombreArticulo.value = "";
-    dom_nombreArticulo.focus();
-
+    dom_nombreArticulo.focus();    
+    
     precioCarrito = precioCarrito + (dom_unidadesArticulo.value * dom_precioArticulo.value);
     
-    precioCarrito.toFixed(2);
-
     dom_precioArticulo.value = "";
     dom_unidadesArticulo.value = 1;
     
@@ -206,34 +219,49 @@ function f_imprimir(){
     dom_numTarjeta.className = "";
     dom_titularTarjeta.className = "";
     
-    if(dom_formaPago.value != "seleccione"){
+    if(listaArticulosCarrito != ""){
 
-        if(dom_formaPago.value == "tarjeta"){
+        if(dom_formaPago.value != "seleccione"){
 
-            var validadorNumeroTarjeta = /^\d{16}$/;
-            var validadorCvv = /^\d{3}$/;
+            if(dom_formaPago.value == "tarjeta"){
 
-            if (validadorCvv.test(dom_cvv.value) == false || validadorNumeroTarjeta.test(dom_numTarjeta.value) == false || dom_titularTarjeta.value == "") {              
+                var validadorTitularTarjeta = /^[A-z]+$/ // El titular de la tarjeta sólo admite letras
+                var validadorNumeroTarjeta = /^\d{16}$/; // El número de tarjeta debe tener 16 dígitos
+                var validadorCvv = /^\d{3}$/; // El CVV debe tener 3 dígitos
                 
-                if(validadorCvv.test(dom_cvv.value) == false){
-                    dom_cvv.className = "error";
-                    dom_cvv.focus();
+                if (validadorCvv.test(dom_cvv.value) == false || validadorNumeroTarjeta.test(dom_numTarjeta.value) == false || dom_titularTarjeta.value == "" || validadorTitularTarjeta.test(dom_titularTarjeta.value) == false) {              
+                    
+                    if(validadorCvv.test(dom_cvv.value) == false){
+                        dom_cvv.className = "error";
+                        dom_cvv.focus();
+                    }
+
+                    if(validadorNumeroTarjeta.test(dom_numTarjeta.value) == false){
+                        dom_numTarjeta.className = "error";
+                        dom_numTarjeta.focus();
+                    }                   
+
+                    if(dom_titularTarjeta.value == "" || validadorTitularTarjeta.test(dom_titularTarjeta.value) == false){
+                        dom_titularTarjeta.className = "error";
+                        dom_titularTarjeta.focus();
+                    }
+
+                    alert(
+                        "Revisa los datos de la tarjeta"
+                    );
+                    
+                } else {
+
+                    alert(
+                        "El carrito contiene: " + listaArticulosCarrito +
+                        "\nPrecio total del carrito: " + dom_precioCarrito.value + 
+                        "\nForma de pago: " + dom_formaPago.value
+                    );
+                    
+                    f_restablecer();
                 }
 
-                if(validadorNumeroTarjeta.test(dom_numTarjeta.value) == false){
-                    dom_numTarjeta.className = "error";
-                    dom_numTarjeta.focus();
-                }
-    
-                if(dom_titularTarjeta.value == ""){
-                    dom_titularTarjeta.className = "error";
-                    dom_titularTarjeta.focus();
-                }
 
-                alert(
-                    "Revisa los datos de la tarjeta"
-                );
-                
             } else {
 
                 alert(
@@ -243,45 +271,55 @@ function f_imprimir(){
                 );
                 
                 f_restablecer();
+
             }
-
-
-        } else {
-
-            alert(
-                "El carrito contiene: " + listaArticulosCarrito +
-                "\nPrecio total del carrito: " + dom_precioCarrito.value + 
-                "\nForma de pago: " + dom_formaPago.value
-            );
             
-            f_restablecer();
-
+        } else {
+            alert(
+                "Seleccione forma de pago"
+            );
+            dom_formaPago.className = "error";
         }
-        
+
+    
     } else {
         alert(
-            "Seleccione forma de pago"
+            "El carrito está vacío"
         );
-        dom_formaPago.className = "error";
+
     }
+
 }
 
 // Función que resetea la página a las indicaciones del requerimiento
 function f_restablecer(){
   
     dom_nombreArticulo.focus();
-    dom_capaTarjeta.style.display = "none";
-    dom_capaEfectivo.style.display = "none";
+    dom_nombreArticulo.value = "";
+    dom_precioArticulo.value = "";
+    dom_errorArticulo.style.display = "none";
+    dom_errorPrecio.style.display = "none";
+    dom_errorUnidades.style.display = "none";
+    dom_nombreArticulo.className = "";
+    dom_precioArticulo.className = "";
+    dom_unidadesArticulo.className = "";
+    var error = 0;
+    
     dom_precioCarrito.value = 0;
     dom_articulosCarrito.value = "";
     listaArticulosCarrito = "";
     precioCarrito = 0;
+
     dom_formaPago.value = "seleccione";
+    dom_capaTarjeta.style.display = "none";
+    dom_capaEfectivo.style.display = "none";
     dom_titularTarjeta.value = "";
     dom_numTarjeta.value = "";
     dom_cvv.value = "";
     dom_importeEfectivo.value = 0;
+
     dom_condicionesCompra.checked = false;
     conmutadorImprimir = 0;
     dom_botonImprimir.style.visibility = "hidden";
+    
 }
