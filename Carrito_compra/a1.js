@@ -1,3 +1,10 @@
+/* Grupo formado por:
+        ESTANISLAO CALLADO REQUENA
+        FRANCISCO MIGUEL GONZÁLEZ HERRERA
+        RAFAEL MORENO ESTÉVEZ
+        JOSÉ ALFONSO RODRÍGUEZ CABRERO
+*/
+
 // Declaración de variables
     // Las variables de nombre dom_* recogen los nodos del documento html
     // Las variables sin dom_* se utilizan para dotar de funcionalidad al html
